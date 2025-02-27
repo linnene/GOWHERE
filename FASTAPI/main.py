@@ -3,10 +3,11 @@ from database.db import get_db,engine,Base
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from Routes.user import router as user_router
-
+from Routes.login import login
 
 app = FastAPI()
 app.include_router(user_router, prefix="/user", tags=["USER"])
+app.include_router(login, prefix="/login", tags=["LOGIN"])
 
 Base.metadata.create_all(bind=engine)
 
