@@ -8,7 +8,7 @@ class User(Base):
     
     username: str = Column(String(50), nullable=False)
     #密码存储为哈希
-    password: str = Column(String(50), nullable=False)
+    password: str = Column(String(200), nullable=False)
     #邮箱可为空
     email: str = Column(String(50), nullable=True)
 

@@ -18,3 +18,8 @@ class UserRead(BaseModel):
     username: str
     email: str
     phonenmber_Id: str
+
+class UserLogin(BaseModel):
+    phonenmber_Id: int
+    password: str
+    
