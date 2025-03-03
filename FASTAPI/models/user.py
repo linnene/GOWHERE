@@ -15,16 +15,3 @@ class User(Base):
     # 使用手机号作为主键
     phonenmber_Id: int = Column(String(50), primary_key=True, nullable=False)
 
-    # role: RoleType = Column(
-    #     Enum(RoleType),
-    #     nullable=False,
-    #     server_default=RoleType.user, 
-    #     index=True
-    # )
-
-{
-  "username": "Line",
-  "password": "ioiz73763",
-  "email": "1234@qq.com",
-  "phonenmber_Id": 18085588360
-}

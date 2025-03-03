@@ -2,7 +2,6 @@ from models.user import User
 from schemas.user import UserUpdate
 from sqlalchemy.orm import Session
 import bcrypt
-from fastapi import HTTPException
 
 #TODO:添加密码哈希加密 -- [√]
 def add_user(new_user: User, db: Session):
@@ -30,7 +29,9 @@ def get_user(db: Session, user_id: int):
 
 #TODO:ID 和 电话号码不能被修改，绑定 -- [√]
 #TODO:完成更新函数，需要创建Up_UserModel--[√]
+
 def update_user(up_user: UserUpdate, user_id: int ,db: Session):
+    
     user = db.query(User).filter(User.phonenmber_Id == user_id).first()
     user.username = up_user.username
     user.password = up_user.password
