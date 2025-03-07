@@ -41,5 +41,5 @@ conf = ConnectionConfig(
             USE_CREDENTIALS= settings.mail_use_credentials,
             VALIDATE_CERTS= settings.mail_validate_certs,
             TEMPLATE_FOLDER= Path("D:/GOWHERE/Back_End/templates/email/"),
-            SUPPRESS_SEND = 0 
+            SUPPRESS_SEND = 1 
         )

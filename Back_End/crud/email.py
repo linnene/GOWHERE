@@ -4,6 +4,7 @@ from fastapi import BackgroundTasks
 from schemas.email import EmailSchema
 from config import conf
 from crud.auth import get_verify_code
+from crud.redis import set_value
 
 from jinja2 import Template 
 
@@ -21,8 +22,10 @@ async def send_email(
 
     # 发送随机的code到email
     code = get_verify_code()
-    email_data.message = f"YOUR CODE IS {code}"
 
+    await set_value(email_data.recipients[0] , code)
+
+    email_data.message = f"YOUR CODE IS {code}"
     html_content = template.render(name=email_data.name, message= email_data.message)
 
     message = MessageSchema(
@@ -34,3 +37,4 @@ async def send_email(
     
     fm = FastMail(conf)
     backgroundTasks.add_task(fm.send_message ,message)
+    
