@@ -1,10 +1,10 @@
 from model.base import Base
-from sqlalchemy import String, Column, Integer,Boolean
+from sqlalchemy import String, Column, Boolean
 
 class User(Base):
     __tablename__ = "user"
 
-    UserId = Column(Integer, primary_key=True, index=True)
+    UserId = Column(String(255), primary_key=True,nullable=False, index=True)
     UserEmail = Column(String(255), index=True)
 
     # hashed_password

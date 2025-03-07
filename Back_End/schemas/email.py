@@ -1,0 +1,16 @@
+from typing import Any
+
+from pydantic import BaseModel, EmailStr
+
+
+class EmailSchema(BaseModel):
+    recipients: list[EmailStr]
+    subject: str
+    body: str
+
+
+class EmailTemplateSchema(BaseModel):
+    recipients: list[EmailStr]
+    subject: str
+    body: dict[str, Any]
+    template_name: str

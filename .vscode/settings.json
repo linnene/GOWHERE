@@ -1,0 +1,4 @@
+{
+    "python.REPL.enableREPLSmartSend": false,
+    "todo-tree.tree.scanMode": "workspace only"
+}
