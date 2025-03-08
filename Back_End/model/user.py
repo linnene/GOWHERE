@@ -8,8 +8,11 @@ class User(Base):
     UserEmail = Column(String(255), index=True)
 
     # hashed_password
-    UserPassword = Column(String(255), index=True)
+    UserPassword = Column(String(255), index=False)
     UserName = Column(String(255), index=True)  
+
+    #is email verified
+    UserEmailVerified = Column(Boolean, default=False)
     
     #is BAN
     Is_Ban = Column(Boolean, default=1)

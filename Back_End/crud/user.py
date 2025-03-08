@@ -1,10 +1,10 @@
+from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+
 from model.user import User
 from schemas.user import UserCreate,UserUpdate
-from fastapi import HTTPException
 from crud.auth import hash_password, verify_password
-
 
 async def create_user(user: UserCreate, db: AsyncSession) -> User:
     """
@@ -26,33 +26,43 @@ async def create_user(user: UserCreate, db: AsyncSession) -> User:
     # await db.refresh(new_user)
     return new_user
 
-async def get_user_by_id(user_id: int, db: AsyncSession):
+async def get_user_by_email(email: str, db: AsyncSession) -> User:
+    """
+    通过邮箱获取用户信息
+    """
+    result = await db.execute(select(User).filter(User.UserEmail == email))
+    user = result.scalars().first()
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+async def get_user_by_id(user_id: str, db: AsyncSession ) -> User:
     """
     通过用户ID获取用户信息
     """
 
-    async with db.begin():
-        result = await db.execute(select(User).filter(User.UserId == user_id))
-        user = result.scalars().first()
-        if user is None:
-            raise HTTPException(status_code=404, detail="User not found")
-        return user
+    result = await db.execute(select(User).filter(User.UserId == user_id))
+    user = result.scalars().first()
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
     
 
-async def reflush_user(new_user: UserUpdate ,user_id:int ,db: AsyncSession):
+async def reflush_user(new_user: UserUpdate ,user_id: str ,db: AsyncSession):
     """
     更新用户信息
-    TODO：验证是否异步
+    TODO: 验证是否异步
     """
     async with db.begin():
         cur_user = await get_user_by_id(user_id, db) 
-
+        print(cur_user)
         cur_user.UserName = new_user.UserName
         cur_user.UserPassword = new_user.UserPassword
         cur_user.UserEmail = new_user.UserEmail
         cur_user.Is_Ban = new_user.Is_Ban
-
         await db.flush()
+        
     return cur_user
 
 
@@ -67,3 +77,10 @@ async def verify_user_by_pw(user_id: int, password: str, db: AsyncSession):
     if not verify_password(password, user.UserPassword):
         raise HTTPException(status_code=401, detail="Incorrect password")
     return user
+
+
+async def set_user_emaliVer(email: str, db: AsyncSession):
+    user = await get_user_by_email(email, db)
+    if user:
+        user.UserEmailVerified = True
+        await db.commit()

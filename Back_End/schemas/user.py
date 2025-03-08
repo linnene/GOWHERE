@@ -21,7 +21,8 @@ class UserCreate(BaseModel):
     UserPassword: str
     UserEmail: str = None    
     #SAME AS PHONE NUMBER
-    Is_Ban: bool 
+    UserEmailVerified: bool = False
+    Is_Ban: bool = False
 
 class UserRead(BaseModel):
     """
