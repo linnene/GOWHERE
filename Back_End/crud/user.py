@@ -7,16 +7,21 @@ from schemas.user import UserCreate,UserUpdate
 from crud.auth import hash_password, verify_password
 
 async def create_user(user: UserCreate, db: AsyncSession) -> User:
+
     """
     有关创建一个新的用户，现在的用户ID又数据库自己创建，
     之后会将ID改为PhoneNumber将账号和手机号绑定
     TODO：修改 {User} 中的 ID 表项
     """
+    
     async with db.begin():  # 开启事务
+
         result = await db.execute(select(User).filter(User.UserId == user.UserId))
         existing_user = result.scalars().first()
+        
         if existing_user:
             raise HTTPException(status_code=400, detail="User already registered")
+        
         user.UserPassword = hash_password(user.UserPassword)  
         new_user = User(**user.model_dump())
         db.add(new_user)
@@ -27,16 +32,19 @@ async def create_user(user: UserCreate, db: AsyncSession) -> User:
     return new_user
 
 async def get_user_by_email(email: str, db: AsyncSession) -> User:
+
     """
     通过邮箱获取用户信息
     """
+    
     result = await db.execute(select(User).filter(User.UserEmail == email))
     user = result.scalars().first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-async def get_user_by_id(user_id: str, db: AsyncSession ) -> User:
+async def get_user_by_id(user_id: str, db: AsyncSession ):
+
     """
     通过用户ID获取用户信息
     """
@@ -45,15 +53,17 @@ async def get_user_by_id(user_id: str, db: AsyncSession ) -> User:
     user = result.scalars().first()
 
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        return HTTPException(status_code=404, detail="User not found")
     return user
     
 
 async def reflush_user(new_user: UserUpdate ,user_id: str ,db: AsyncSession):
+
     """
     更新用户信息
     TODO: 验证是否异步
     """
+    
     async with db.begin():
         cur_user = await get_user_by_id(user_id, db) 
         print(cur_user)

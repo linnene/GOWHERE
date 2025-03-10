@@ -13,7 +13,6 @@ async def get_token(user_id: str, db: Annotated[AsyncSession, Depends(get_db)]):
     """
     Test-25/3/8 -- [Complet]-[Success]
     """
-
     user = await get_user_by_id(user_id, db)
     #TODO:安全性问题
     

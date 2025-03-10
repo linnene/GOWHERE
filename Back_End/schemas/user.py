@@ -24,6 +24,9 @@ class UserCreate(BaseModel):
     UserEmailVerified: bool = False
     Is_Ban: bool = False
 
+    class Config:
+        from_attributes = True
+
 class UserRead(BaseModel):
     """
     UserRead is a Pydantic model that is used to validate
@@ -36,6 +39,12 @@ class UserRead(BaseModel):
     UserId: str
     Is_Ban: bool 
 
+    
+    class Config:
+        from_attributes = True
+
+    
+
 class UserUpdate(BaseModel):
     """
     UserUpdate is a Pydantic model that is used to validate
@@ -47,3 +56,7 @@ class UserUpdate(BaseModel):
     UserPassword: str
     UserEmail: str = None    
     Is_Ban: bool
+
+    
+    class Config:
+        from_attributes = True
