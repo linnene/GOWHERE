@@ -38,6 +38,8 @@ class UserRead(BaseModel):
     #SAME AS PHONE NUMBER
     UserId: str
     Is_Ban: bool 
+    UserEmailVerified: bool = False
+    
 
     
     class Config:
@@ -56,6 +58,8 @@ class UserUpdate(BaseModel):
     UserPassword: str
     UserEmail: str = None    
     Is_Ban: bool
+    UserEmailVerified: bool = False
+
 
     
     class Config:

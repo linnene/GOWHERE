@@ -1,18 +1,17 @@
+from fastapi import  HTTPException, status
 from passlib.context import CryptContext
-from fastapi import HTTPException, status
-import jwt
 import datetime
 import random
 import string
+import jwt
 
 from crud.redis import get_value
 from model.user import User
 from config import settings
 
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-#Hash the password
+#Hash the password 哈希密码存储
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
@@ -21,6 +20,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 #TODO： create a verification code for email verification -- [√]
+#创建邮件验证码
 def get_verify_code(length=6):
     characters = string.ascii_letters + string.digits  # 包含大小写字母和数字
     return ''.join(random.choices(characters, k=length))
@@ -30,7 +30,6 @@ async def verify_code(code: str, email: str) -> bool:
     stored_code = await get_value(email)
     return code == stored_code
 
-#port:6379
 
 #Create a JWT 短期 token
 def encode_token(user: User) -> str:
@@ -38,6 +37,7 @@ def encode_token(user: User) -> str:
         try:
             payload = {
                 "sub": user.UserId,
+                
                 #TODO:过期时间，检验时记得校验
                 "exp": datetime.datetime.now(tz=datetime.timezone.utc)
                 + datetime.timedelta(

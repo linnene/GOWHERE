@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 
 
-
 from crud.email import send_email
 from crud.auth import verify_code
 from crud.user import set_user_emaliVer
