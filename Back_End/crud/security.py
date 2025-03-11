@@ -75,5 +75,3 @@ async def get_current_user(
             detail="Not authenticated. Use either JWT token or API key.",
             headers={"WWW-Authenticate": "Bearer or ApiKey"},
         )
-        
-
