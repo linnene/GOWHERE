@@ -1,4 +1,7 @@
 from pydantic import BaseModel
+from sqlalchemy import Enum
+from sqlalchemy.orm import mapped_column
+from schemas.role import RoleType
 
 
 class UserCreate(BaseModel):
@@ -7,11 +10,13 @@ class UserCreate(BaseModel):
     the data that is sent to the server when creating a new user.
     创建新用户使用的模型
     Example:
+
 {
     "UserId": "18085588360",
     "UserName": "Line",
     "UserPassword": "ioiz73763",
     "UserEmail": "1234@qq.com",
+    UserEmailVerified: bool = False,
     "Is_Ban": false
 }   
     """
@@ -23,6 +28,13 @@ class UserCreate(BaseModel):
     #SAME AS PHONE NUMBER
     UserEmailVerified: bool = False
     Is_Ban: bool = False
+    
+    role: RoleType = mapped_column(
+        Enum(RoleType),
+        nullable=False,
+        server_default=RoleType.user.name,
+        index=True,
+    )
 
     class Config:
         from_attributes = True
@@ -39,8 +51,6 @@ class UserRead(BaseModel):
     UserId: str
     Is_Ban: bool 
     UserEmailVerified: bool = False
-    
-
     
     class Config:
         from_attributes = True
@@ -60,7 +70,5 @@ class UserUpdate(BaseModel):
     Is_Ban: bool
     UserEmailVerified: bool = False
 
-
-    
     class Config:
         from_attributes = True
