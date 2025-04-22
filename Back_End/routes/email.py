@@ -17,7 +17,6 @@ router = APIRouter(prefix="/email",tags=["EMAIL"])
         "/send_template_email",
         name="Send ver_Code Email to Email"
 )
-
 async def send_template_email(
     email_data: EmailSchema,
     backgroundTasks: BackgroundTasks

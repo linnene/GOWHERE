@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoWhere</title>
+    <title>GoWhere 验证码</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +14,7 @@
         .container {
             max-width: 600px;
             margin: 20px auto;
-            background: #f7f7f7;
+            background: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(97, 97, 97, 0.1);
@@ -22,40 +22,62 @@
         .header {
             text-align: center;
             padding-bottom: 20px;
-            font-size: larger;
-            font-weight: bolder;
+            border-bottom: 1px solid #eeeeee;
         }
         .header h1 {
-            font-size: 24px;
+            font-size: 28px;
             color: #333;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #666;
+            margin-top: 0;
         }
         .content {
-            font-size: 16px;
-            color: #666;
+            padding: 20px 0;
+            color: #555;
             line-height: 1.6;
         }
-        .content p{
-          font-size: 24px;
-          font-weight: 500;
-          
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 15px;
         }
-        .button {
-            display: block;
-            width: 200px;
+        .message {
+            margin-bottom: 20px;
+        }
+        .code-container {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
             text-align: center;
-            background: #007BFF;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 20px auto;
-            font-size: 16px;
+            border: 2px solid #0066cc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .verification-code {
+            font-size: 38px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #0066cc;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+            background-color: #e6f0ff;
+            padding: 15px 25px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .expiry {
+            font-size: 14px;
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: bold;
         }
         .footer {
             text-align: center;
             font-size: 12px;
-            color: #aaa;
-            margin-top: 20px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #eeeeee;
         }
     </style>
 </head>
@@ -63,14 +85,22 @@
     <div class="container">
         <div class="header">
             <h1>GoWhere</h1>
+            <p>账号安全验证</p>
         </div>
         <div class="content">
-            <p>HELLO {{name}}</p>
-            <p>{{message}}</p>
+            <div class="greeting">您好，{{name}}！</div>
+            <div class="message">{{message}}</div>
+            
+            <div class="code-container">
+                <div class="verification-code">{{code}}</div>
+                <div class="expiry">验证码有效期为15分钟，请勿将验证码泄露给他人</div>
+            </div>
+            
+            <p>如果这不是您的操作，请忽略此邮件。</p>
         </div>
         <div class="footer">
-            <p>If any problem, please conncet us.</p>
-            <p>&copy; 2025 GoWhere </p>
+            <p>如有任何问题，请联系我们的客服团队</p>
+            <p>&copy; 2025 GoWhere - 让旅行更简单</p>
         </div>
     </div>
 </body>
